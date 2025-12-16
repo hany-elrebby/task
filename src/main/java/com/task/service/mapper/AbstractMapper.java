@@ -1,4 +1,4 @@
-package com.task.entity;
+package com.task.service.mapper;
 
 import java.util.List;
 

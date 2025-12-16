@@ -1,5 +1,6 @@
-package com.task.entity;
+package com.task.service.mapper;
 
+import com.task.entity.Department;
 import com.task.service.dto.DepartmentDto;
 import org.mapstruct.Mapper;
 

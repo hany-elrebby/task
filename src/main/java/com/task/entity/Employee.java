@@ -15,12 +15,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "employee")
-@Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -37,7 +40,7 @@ public class Employee {
     private LocalDate dateOfBirth;
 
     @OneToMany
-    private Address address;
+    private List<Address> addresses;
 
     private String Mobile;
 

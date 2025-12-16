@@ -5,7 +5,7 @@ import com.task.repository.DepartmentRepository;
 import com.task.service.DepartmentService;
 import com.task.service.dto.DepartmentDto;
 import com.task.service.error.EntityNotFoundException;
-import com.task.entity.DepartmentMapper;
+import com.task.service.mapper.DepartmentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;

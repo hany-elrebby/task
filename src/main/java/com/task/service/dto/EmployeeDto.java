@@ -1,6 +1,8 @@
 package com.task.service.dto;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 
 public record EmployeeDto(Integer id, String Code,
@@ -9,6 +11,6 @@ public record EmployeeDto(Integer id, String Code,
                           AddressDto addressDto,
                           String Mobile,
                           Double salary,
-                          DepartmentDto departmentDto,
-                          ImageDto image) {
+                          Long departmentId,
+                          byte[] image) {
 }
