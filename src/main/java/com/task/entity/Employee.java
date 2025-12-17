@@ -39,8 +39,8 @@ public class Employee {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @OneToMany
-    private List<Address> addresses;
+    @OneToOne
+    private Address address;
 
     private String Mobile;
 

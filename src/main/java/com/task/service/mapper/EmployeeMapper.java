@@ -11,13 +11,11 @@ public interface EmployeeMapper extends AbstractMapper<Employee, EmployeeDto> {
 
     @Mapping(source = "image", target = "image")
     @Mapping(source = "departmentId", target = "department.id")
-    @Mapping(target = "addresses", expression =
-    "java(employeeDto.getAddressDto() != null ? List.of(addressMapper.toEntity(employeeDto.getAddressDto())) : null)")
+    @Mapping(source = "addressDto", target = "address")
     Employee toEntity(EmployeeDto employeeDto);
 
     @Mapping(source = "department.id", target = "departmentId")
     @Mapping(source = "image", target = "image")
-    @Mapping(target = "addressDto", expression =
-    "java(employee.getAddresses() != null && !employee.getAddresses().isEmpty() ? addressMapper.toDto(employee.getAddresses().get(0)) : null)")
+    @Mapping(source = "address", target = "addressDto")
     EmployeeDto toDto(Employee employee);
 }
