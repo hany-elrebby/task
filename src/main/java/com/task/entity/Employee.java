@@ -1,15 +1,6 @@
 package com.task.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,17 +23,17 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String Code;
+    private String code;
 
-    private String Name;
+    private String name;
 
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    private String Mobile;
+    private String mobile;
 
     private Double salary;
 
@@ -50,6 +41,6 @@ public class Employee {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Image image;
 }

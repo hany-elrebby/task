@@ -10,11 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
-    private DepartmentRepository departmentRepository;
-    private DepartmentMapper departmentMapper;
+    private final DepartmentRepository departmentRepository;
+    private final DepartmentMapper departmentMapper;
     @Override
     public DepartmentDto save(DepartmentDto departmentDto) {
         Department department = Department.builder()
@@ -42,8 +44,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Page<DepartmentDto> getAll() {
-        return null;
+    public List<DepartmentDto> getAll() {
+        return departmentMapper.toDtoList(departmentRepository.findAll());
     }
 
     @Override

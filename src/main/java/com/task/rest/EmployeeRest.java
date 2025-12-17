@@ -7,6 +7,7 @@ import com.task.service.dto.EmployeeDto;
 import com.task.service.mapper.ImageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,20 +32,13 @@ import java.time.LocalDate;
 @RequestMapping("/employees")
 @RequiredArgsConstructor
 public class EmployeeRest {
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     @PostMapping
     public ResponseEntity<?> create(@RequestPart EmployeeRequest employee,
             @RequestPart MultipartFile image) throws IOException {
         EmployeeDto saved = employeeService.save(employee, image);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(saved.id())
-                .toUri();
-
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -65,8 +59,8 @@ public class EmployeeRest {
 
     @GetMapping
     public ResponseEntity<Page<EmployeeDto>> getAll(
-                                                    @RequestParam int size,
-                                                    @RequestParam int page) {
+                                                    @RequestParam(defaultValue = "10") int size,
+                                                    @RequestParam(defaultValue = "0") int page) {
         return ResponseEntity.ok(employeeService.getAll(size, page));
     }
 }

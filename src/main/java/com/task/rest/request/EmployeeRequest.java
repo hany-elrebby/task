@@ -7,11 +7,11 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
-public record EmployeeRequest(Integer id, String Code,
-                             String Name,
+public record EmployeeRequest(Integer id, String code,
+                             String name,
                              LocalDate dateOfBirth,
                              AddressDto addressDto,
-                             String Mobile,
+                             String mobile,
                              Double salary,
                              Long departmentId,
                              byte[] image) { }

@@ -6,6 +6,7 @@ import com.task.entity.Employee;
 import com.task.entity.Image;
 import com.task.repository.DepartmentRepository;
 import com.task.repository.EmployeeRepository;
+import com.task.repository.specification.EmployeeSpecification;
 import com.task.rest.request.EmployeeRequest;
 import com.task.service.EmployeeService;
 import com.task.service.dto.EmployeeDto;
@@ -15,6 +16,9 @@ import com.task.service.mapper.EmployeeMapper;
 import com.task.service.mapper.ImageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,11 +27,12 @@ import java.io.IOException;
 @Service
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
-    private EmployeeRepository employeeRepository;
-    private EmployeeMapper employeeMapper;
-    private AddressMapper addressMapper;
-    private ImageMapper imageMapper;
-    private DepartmentRepository departmentRepository;
+    private final EmployeeRepository employeeRepository;
+    private final EmployeeMapper employeeMapper;
+    private final AddressMapper addressMapper;
+    private final ImageMapper imageMapper;
+    private final DepartmentRepository departmentRepository;
+    private final EmployeeSpecification employeeSpecification;
 
     @Override
     public EmployeeDto save(EmployeeRequest employeeRequest, MultipartFile multipartFile) {
@@ -45,11 +50,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee employee = Employee
                 .builder()
-                .Name(employeeRequest.Name())
+                .code(employeeRequest.code())
+                .name(employeeRequest.name())
                 .department(department)
                 .address(address)
                 .dateOfBirth(employeeRequest.dateOfBirth())
-                .Mobile(employeeRequest.Mobile())
+                .mobile(employeeRequest.mobile())
                 .image(image(multipartFile))
                 .build();
 
@@ -76,7 +82,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Page<EmployeeDto> getAll(int size, int page) {
-        return null;
+        Pageable pageable = PageRequest.of(page, size);
+        return employeeRepository.findAll(employeeSpecification.getAll(), pageable)
+                .map(employeeMapper::toDto);
     }
 
     @Override
