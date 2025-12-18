@@ -16,6 +16,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "address")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -23,10 +24,7 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String country;
     private String state;
     private String city;
     private String street;
-    @Column(name = "postal_code")
-    private String postalCode;
 }

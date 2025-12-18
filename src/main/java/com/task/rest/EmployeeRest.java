@@ -42,8 +42,10 @@ public class EmployeeRest {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeDto> update(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
-        return ResponseEntity.ok(employeeService.update(id, employeeDto));
+    public ResponseEntity<Long> update(@PathVariable Long id,
+                                       @RequestPart EmployeeRequest employee,
+                                       @RequestPart MultipartFile image) {
+        return ResponseEntity.ok(employeeService.update(id, employee, image).id());
     }
 
     @GetMapping("/{id}")

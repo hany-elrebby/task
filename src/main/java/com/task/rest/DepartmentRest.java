@@ -1,9 +1,7 @@
-package com.task.rest.request;
+package com.task.rest;
 
-import com.task.entity.Department;
 import com.task.service.DepartmentService;
 import com.task.service.dto.DepartmentDto;
-import com.task.service.dto.EmployeeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

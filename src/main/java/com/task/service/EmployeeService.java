@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface EmployeeService {
     EmployeeDto save(EmployeeRequest employeeRequest, MultipartFile multipartFile);
-    EmployeeDto update(Long id, EmployeeDto employeeDto);
+    EmployeeDto update(Long id, EmployeeRequest employeeRequest, MultipartFile multipartFile);
     Void delete(Long id);
     Page<EmployeeDto> getAll(int size, int page);
     EmployeeDto get(Long id);

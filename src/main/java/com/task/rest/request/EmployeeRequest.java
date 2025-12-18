@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
-public record EmployeeRequest(Integer id, String code,
+public record EmployeeRequest(Long id, String code,
                              String name,
                              LocalDate dateOfBirth,
                              AddressDto addressDto,

@@ -1,4 +1,4 @@
 package com.task.service.dto;
 
-public record ImageDto (Integer id, byte[] image) {
+public record ImageDto (Long id, byte[] image) {
 }

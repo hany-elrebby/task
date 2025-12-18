@@ -1,9 +1,7 @@
 package com.task.service.dto;
 
-public record AddressDto(Integer id,
-                         String country,
+public record AddressDto(Long id,
                          String state,
                          String city,
-                         String street,
-                         String postalCode) {
+                         String street) {
 }

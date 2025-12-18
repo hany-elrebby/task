@@ -4,6 +4,7 @@ import com.task.entity.Address;
 import com.task.entity.Department;
 import com.task.entity.Employee;
 import com.task.entity.Image;
+import com.task.repository.AddressRepository;
 import com.task.repository.DepartmentRepository;
 import com.task.repository.EmployeeRepository;
 import com.task.repository.specification.EmployeeSpecification;
@@ -33,6 +34,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final ImageMapper imageMapper;
     private final DepartmentRepository departmentRepository;
     private final EmployeeSpecification employeeSpecification;
+    private final AddressRepository addressRepository;
+
 
     @Override
     public EmployeeDto save(EmployeeRequest employeeRequest, MultipartFile multipartFile) {
@@ -44,11 +47,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         
         Address address = Address
                 .builder()
-                .country("Egypt")
                 .state(employeeRequest.addressDto().state())
                 .city(employeeRequest.addressDto().city())
                 .street(employeeRequest.addressDto().street())
-                .postalCode(employeeRequest.addressDto().postalCode())
                 .build();
 
         Employee employee = Employee
@@ -74,8 +75,41 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto update(Long id, EmployeeDto employeeDto) {
-        return null;
+    public EmployeeDto update(Long id, EmployeeRequest employeeRequest, MultipartFile multipartFile) {
+
+        Employee existed = employeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Employee", "id", id));
+
+        employeeRepository.findByCode(employeeRequest.code())
+                .filter(e -> !e.getId().equals(id))
+                .ifPresent(e -> {
+                    throw new RuntimeException("Error code duplicated");
+                });
+
+        Department department = departmentRepository.findById(employeeRequest.departmentId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Department", "id", employeeRequest.departmentId()));
+
+        Address address = addressRepository.findById(employeeRequest.addressDto().id())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Address", "id", employeeRequest.addressDto().id()));
+
+        address.setState(employeeRequest.addressDto().state());
+        address.setCity(employeeRequest.addressDto().city());
+        address.setStreet(employeeRequest.addressDto().street());
+
+        existed.setCode(employeeRequest.code());
+        existed.setName(employeeRequest.name());
+        existed.setDepartment(department);
+        existed.setAddress(address);
+        existed.setDateOfBirth(employeeRequest.dateOfBirth());
+        existed.setMobile(employeeRequest.mobile());
+
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            existed.setImage(image(multipartFile));
+        }
+
+        return employeeMapper.toDto(employeeRepository.save(existed));
     }
 
     @Override
