@@ -10,7 +10,7 @@ import java.util.List;
 public interface DepartmentService {
     DepartmentDto save(DepartmentDto departmentDto);
     DepartmentDto update(Long id, DepartmentDto departmentDto);
-    Void delete(Long id);
+    void delete(Long id);
     List<DepartmentDto> getAll();
     DepartmentDto get(Long id);
 }

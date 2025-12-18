@@ -39,6 +39,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         Department department = departmentRepository.findById(employeeRequest.departmentId())
                 .orElseThrow(() -> new EntityNotFoundException("department", "id", employeeRequest.departmentId()));
 
+        if (employeeRepository.findByCode(employeeRequest.code()).isPresent())
+            throw new RuntimeException("Error code duplicated");
+        
         Address address = Address
                 .builder()
                 .country("Egypt")
@@ -89,6 +92,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto get(Long id) {
-        return null;
+        return employeeMapper.toDto(employeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Employee", "id", id)));
     }
 }

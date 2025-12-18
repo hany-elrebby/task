@@ -35,10 +35,10 @@ public class EmployeeRest {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestPart EmployeeRequest employee,
+    public ResponseEntity<Long> create(@RequestPart EmployeeRequest employee,
             @RequestPart MultipartFile image) throws IOException {
         EmployeeDto saved = employeeService.save(employee, image);
-        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        return new ResponseEntity<>(saved.id(), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -47,12 +47,12 @@ public class EmployeeRest {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> getById(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<EmployeeDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.get(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         employeeService.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -34,13 +34,14 @@ public class DepartmentServiceImpl implements DepartmentService {
         existed = Department.builder()
                 .name(departmentDto.name())
                 .code(departmentDto.code())
+                .description(departmentDto.description())
                 .build();
         return departmentMapper.toDto(departmentRepository.save(existed));
     }
 
     @Override
-    public Void delete(Long id) {
-        return null;
+    public void delete(Long id) {
+        departmentRepository.deleteById(id);
     }
 
     @Override

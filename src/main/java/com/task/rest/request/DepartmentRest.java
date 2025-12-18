@@ -19,12 +19,24 @@ public class DepartmentRest {
 
 
     @PostMapping
-    public ResponseEntity<DepartmentDto> create(@RequestBody DepartmentDto departmentDto) {
-        return new ResponseEntity<>(departmentService.save(departmentDto), HttpStatus.CREATED);
+    public ResponseEntity<Long> create(@RequestBody DepartmentDto departmentDto) {
+        departmentDto = departmentService.save(departmentDto);
+        return new ResponseEntity<>(departmentDto.id(), HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<DepartmentDto>> getAll() {
         return new ResponseEntity<>(departmentService.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DepartmentDto> getAll(@PathVariable Long id) {
+        return new ResponseEntity<>(departmentService.get(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        departmentService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
