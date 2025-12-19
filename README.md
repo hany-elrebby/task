@@ -15,7 +15,7 @@ A **Spring Boot REST API** for managing **Departments** and **Employees**. This 
 ### Prerequisites
 
 * Java 17 or higher
-* Gradle 3.8+
+* Gradle
 * Database (MySQL)
 
 ### Run the Application
