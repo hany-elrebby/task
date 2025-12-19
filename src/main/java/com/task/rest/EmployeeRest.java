@@ -22,11 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
-import java.net.URI;
-import java.time.LocalDate;
+
 
 @RestController
 @RequestMapping("/employees")
@@ -44,7 +42,7 @@ public class EmployeeRest {
     @PutMapping("/{id}")
     public ResponseEntity<Long> update(@PathVariable Long id,
                                        @RequestPart EmployeeRequest employee,
-                                       @RequestPart MultipartFile image) {
+                                       @RequestPart(value = "image", required = false) MultipartFile image) {
         return ResponseEntity.ok(employeeService.update(id, employee, image).id());
     }
 
@@ -60,9 +58,9 @@ public class EmployeeRest {
     }
 
     @GetMapping
-    public ResponseEntity<Page<EmployeeDto>> getAll(
-                                                    @RequestParam(defaultValue = "10") int size,
-                                                    @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<EmployeeDto>> getAll(@RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size) {
+
         return ResponseEntity.ok(employeeService.getAll(size, page));
     }
 }

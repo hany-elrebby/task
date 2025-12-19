@@ -1,4 +1,4 @@
-package com.task.rest;
+package com.task.rest.error;
 
 import lombok.Getter;
 import lombok.Setter;

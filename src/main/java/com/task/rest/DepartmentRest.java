@@ -15,7 +15,6 @@ import java.util.List;
 public class DepartmentRest {
     private final DepartmentService departmentService;
 
-
     @PostMapping
     public ResponseEntity<Long> create(@RequestBody DepartmentDto departmentDto) {
         departmentDto = departmentService.save(departmentDto);
